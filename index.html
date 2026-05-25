@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linktree com Imagens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">S</span>
+        <div>
+          <strong>SEPPALA</strong>
+          <small>Link Studio</small>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <span class="sidebar-label">Perfis</span>
+        <div id="profileList" class="profile-list"></div>
+      </div>
+
+      <div class="button-grid">
+        <button id="newProfile" class="button secondary" type="button">Novo</button>
+        <button id="deleteProfile" class="button ghost danger" type="button">Excluir</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <section class="editor">
+        <div class="section-heading">
+          <p>Conteudo</p>
+          <h1>Monte sua pagina de links</h1>
+        </div>
+
+        <section class="panel">
+          <div class="panel-title">
+            <h2>Perfil</h2>
+            <span>Foto, nome e descricao</span>
+          </div>
+
+          <div class="profile-grid">
+            <label class="upload-tile avatar-upload">
+              <input id="profileAvatarUpload" type="file" accept="image/*" />
+              <img id="avatarThumb" alt="Foto do perfil" />
+              <span>Trocar foto</span>
+            </label>
+
+            <div class="form-stack">
+              <label class="field">
+                <span>Nome</span>
+                <input id="profileName" type="text" placeholder="Seu nome ou marca" />
+              </label>
+
+              <label class="field">
+                <span>Bio</span>
+                <textarea id="profileBio" rows="3" placeholder="Uma frase curta sobre voce"></textarea>
+              </label>
+
+              <label class="field">
+                <span>Rodape</span>
+                <input id="footerText" type="text" placeholder="© 2026 Laboratório Labollife" />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <h2>Aparencia</h2>
+            <span>Cores e estilo do fundo</span>
+          </div>
+
+          <div class="appearance-grid">
+            <label class="field">
+              <span>Fonte</span>
+              <select id="fontFamily">
+                <option value="Inter">Inter</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Arial">Arial</option>
+                <option value="Georgia">Georgia</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Tipo de fundo</span>
+              <select id="backgroundType">
+                <option value="solid">Cor solida</option>
+                <option value="gradient">Degrade</option>
+              </select>
+            </label>
+
+            <label class="toggle-field">
+              <input id="profileShadow" type="checkbox" />
+              <span>Sombra 3D na foto</span>
+            </label>
+
+            <label class="field color-field">
+              <span>Cor principal</span>
+              <input id="backgroundColor" type="color" />
+              <input id="backgroundColorHex" class="hex-input" type="text" maxlength="7" placeholder="#0f766e" />
+            </label>
+
+            <label class="field color-field" id="gradientColorField">
+              <span>Cor do degrade</span>
+              <input id="gradientColor" type="color" />
+              <input id="gradientColorHex" class="hex-input" type="text" maxlength="7" placeholder="#101828" />
+            </label>
+
+            <label class="field color-field">
+              <span>Cor das fontes</span>
+              <input id="textColor" type="color" />
+              <input id="textColorHex" class="hex-input" type="text" maxlength="7" placeholder="#ffffff" />
+            </label>
+
+            <label class="field color-field">
+              <span>Cor do nome</span>
+              <input id="nameColor" type="color" />
+              <input id="nameColorHex" class="hex-input" type="text" maxlength="7" placeholder="#ffffff" />
+            </label>
+
+            <label class="field color-field">
+              <span>Cor da bio</span>
+              <input id="bioColor" type="color" />
+              <input id="bioColorHex" class="hex-input" type="text" maxlength="7" placeholder="#ffffff" />
+            </label>
+
+            <label class="field color-field">
+              <span>Cor do rodape</span>
+              <input id="footerColor" type="color" />
+              <input id="footerColorHex" class="hex-input" type="text" maxlength="7" placeholder="#ffffff" />
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title split">
+            <div>
+              <h2>Links</h2>
+              <span>Cada card pode ter imagem propria</span>
+            </div>
+            <button id="addBlock" class="button" type="button">Adicionar link</button>
+          </div>
+
+          <div id="blocks" class="blocks-list"></div>
+        </section>
+
+        <section class="publish-bar">
+          <div>
+            <strong>Exportar pagina</strong>
+            <span>Gera um HTML pronto com suas imagens.</span>
+          </div>
+          <button id="exportHtml" class="button" type="button">Gerar HTML</button>
+          <a id="downloadLink" class="download hidden"></a>
+        </section>
+      </section>
+
+      <section class="preview-area">
+        <div class="preview-toolbar">
+          <span>Previa</span>
+          <strong id="previewName">Perfil</strong>
+        </div>
+        <div class="phone-frame">
+          <span class="dynamic-island"></span>
+          <div id="preview" class="preview"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="blockTemplate">
+    <article class="block-item">
+      <label class="upload-tile image-upload">
+        <input data-field="imageUpload" type="file" accept="image/*" />
+        <img data-role="thumb" alt="Imagem do link" />
+        <span>Imagem</span>
+      </label>
+
+      <div class="block-fields">
+        <label class="field">
+          <span>Titulo</span>
+          <input data-field="title" type="text" placeholder="Ex: WhatsApp" />
+        </label>
+
+        <label class="field">
+          <span>Link</span>
+          <input data-field="url" type="url" placeholder="https://..." />
+        </label>
+
+        <label class="field color-field compact-color">
+          <span>Cor do titulo</span>
+          <input data-field="titleColor" type="color" />
+          <input data-field="titleColorHex" class="hex-input" type="text" maxlength="7" placeholder="#ffffff" />
+        </label>
+      </div>
+
+      <button data-action="remove" class="icon-button danger" type="button" aria-label="Excluir link">Excluir</button>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
